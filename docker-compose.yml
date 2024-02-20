@@ -11,6 +11,8 @@ services:
       - elasticsearch
     networks:
       - chat-app-network
+    volumes:
+      - .:/usr/src/app
   
   redis:
     image: redis:7.2-alpine

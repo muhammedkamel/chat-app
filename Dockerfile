@@ -1,11 +1,13 @@
-FROM oven/bun:alpine
+FROM node:20-alpine
 
-RUN mkdir -p /usr/app
+WORKDIR /usr/src/app
 
-WORKDIR /usr/app
+COPY package*.json ./
+
+RUN npm ci
 
 COPY . .
 
-RUN bun install
+EXPOSE 3000
 
-CMD [ "bun", "run", "dev" ]
+CMD ["npm", "run", "dev"]
