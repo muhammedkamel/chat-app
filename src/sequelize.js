@@ -1,6 +1,7 @@
 const Sequelize = require('sequelize');
-const config = require('../migrations/config');
 
-module.exports = function setupSequelize() {
-    return new Sequelize(config[process.env.NODE_ENV]);
+module.exports = function setupSequelize(app) {
+    const config = app.get('config');
+
+    return new Sequelize(config.db);
 };

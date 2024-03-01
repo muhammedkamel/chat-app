@@ -5,5 +5,5 @@ const createAppValidation = Joi.object({
 });
 
 module.exports = {
-    createAppValidation
+    createAppValidation,
 }
