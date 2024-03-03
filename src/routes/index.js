@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const appsRouter = require('./apps');
+const appsRouter = require('./apps.route');
 
 /* GET home page. */
 router.get('/', function (req, res, next) {

@@ -3,5 +3,7 @@ const Sequelize = require('sequelize');
 module.exports = function setupSequelize(app) {
     const config = app.get('config');
 
-    return new Sequelize(config.db);
+    const sequelize = new Sequelize(config.db);
+
+    app.set('sequelizeClient', sequelize);
 };

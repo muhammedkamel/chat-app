@@ -1,5 +1,5 @@
-const App = require('../models/app');
-const appResource = require('../resources/app');
+const app = require('../app');
+const appResource = require('../resources/app.resource');
 
 const createApp = async (req, res) => {
     const app = await App.create(req.body);
@@ -8,7 +8,13 @@ const createApp = async (req, res) => {
 }
 
 const getApps = async (req, res) => {
-    const apps = await App.findAll();
+    const AppsModel = app.getModel('apps');
+
+    const apps = await AppsModel.findAll({
+        order: [
+            ['id', 'DESC']
+        ],
+    });
 
     return res.json(apps.map(appResource));
 };

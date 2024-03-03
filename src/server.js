@@ -1,10 +1,10 @@
+const app = require('./app');
 const helmet = require('helmet');
 const cors = require('cors');
 const compression = require('compression');
 const express = require('express');
 const routes = require('./routes');
 const middlewares = require('./middlewares');
-const app = require('./app');
 
 app.use(helmet({ frameguard: { action: 'deny' } }));
 app.use(cors());

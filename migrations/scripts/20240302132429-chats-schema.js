@@ -4,24 +4,29 @@
 module.exports = {
   async up(queryInterface, Sequelize) {
     queryInterface.createTable(
-      'apps',
+      'chats',
       {
         id: {
           type: Sequelize.INTEGER,
           primaryKey: true,
           autoIncrement: true,
-          autoIncrementIdentity: true,
         },
-        name: {
-          type: Sequelize.STRING,
+        number: {
+          type: Sequelize.INTEGER,
           allowNull: false,
         },
-        token: {
-          type: Sequelize.UUID,
-          defaultValue: Sequelize.literal('gen_random_uuid()'),
-          unique: true,
+        app_id: {
+          type: Sequelize.INTEGER,
+          allowNull: false,
+          references: {
+            model: 'apps',
+            key: 'id',
+            as: 'app_id',
+            onDelete: 'CASCADE',
+            onUpdate: 'CASCADE',
+          }
         },
-        chats_count: {
+        messages_count: {
           type: Sequelize.INTEGER,
           allowNull: false,
           defaultValue: 0,
@@ -36,11 +41,18 @@ module.exports = {
           defaultValue: Sequelize.literal('NOW()'),
           allowNull: false,
         },
+      },
+      {
+        uniqueKeys: {
+          unique_app_chat: {
+            fields: ['app_id', 'number'],
+          }
+        }
       }
-    )
+    );
   },
 
   async down(queryInterface, Sequelize) {
-    queryInterface.dropTable('apps');
+    queryInterface.dropTable('chats');
   }
 };
