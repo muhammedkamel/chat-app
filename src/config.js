@@ -21,8 +21,26 @@ const config = {
             max: Number.parseInt(process.env.DB_POOL_MAX, 10) || 10,
         },
     },
+    rabbitmq: {
+        user: process.env.RABBITMQ_USER,
+        pass: process.env.RABBITMQ_PASS,
+        host: process.env.RABBITMQ_HOST,
+        port: process.env.RABBITMQ_PORT,
+    },
+
     get: function (key) {
-        return this[key] || null;
+        if (!key) {
+            return this;
+        }
+
+        const keys = key.split('.');
+        let value = this;
+
+        keys.forEach(k => {
+            value = value[k];
+        });
+
+        return value;
     }
 };
 

@@ -13,6 +13,7 @@
     "pg": "^8.11.3",
     "pg-hstore": "^2.3.4",
     "ramda": "^0.29.1",
+    "rascal": "^17.0.2",
     "sequelize": "^6.37.1"
   },
   "main": "./src/server.js",

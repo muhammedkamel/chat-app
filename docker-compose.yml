@@ -59,6 +59,16 @@ services:
     volumes:
       - es-data:/usr/share/elasticsearch/data
 
+  rabbitmq:
+    image: rabbitmq:3.13.0-management-alpine
+    ports:
+        - 5672:5672
+        - 15672:15672
+    volumes:
+        - rabbitmq-data:/var/lib/rabbitmq/
+        - rabbitmq-log:/var/log/rabbitmq
+    networks:
+      - chat-app-network
 
 networks:
   chat-app-network:
@@ -69,3 +79,5 @@ volumes:
   postgres-data:
   pgadmin-data:
   es-data:
+  rabbitmq-data:
+  rabbitmq-log:
