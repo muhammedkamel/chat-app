@@ -27,6 +27,11 @@ const config = {
         host: process.env.RABBITMQ_HOST,
         port: process.env.RABBITMQ_PORT,
     },
+    redis: {
+        host: process.env.REDIS_HOST,
+        port: process.env.REDIS_PORT,
+        password: process.env.REDIS_PASSWORD,
+    },
 
     get: function (key) {
         if (!key) {

@@ -5,6 +5,11 @@ const compression = require('compression');
 const express = require('express');
 const routes = require('./routes');
 const middlewares = require('./middlewares');
+const setupRabbitMQ = require('./rabbitmq');
+const setupRedis = require('./redis');
+
+setupRabbitMQ(app);
+setupRedis(app);
 
 app.use(helmet({ frameguard: { action: 'deny' } }));
 app.use(cors());

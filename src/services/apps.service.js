@@ -2,31 +2,39 @@ const app = require('../app');
 const appResource = require('../resources/app.resource');
 
 const createApp = async (req, res) => {
-    const app = await App.create(req.body);
+    const AppsModel = app.getModel('apps');
 
-    return res.json(appResource(app));
+    const application = await AppsModel.create(req.body);
+
+    return res.json(appResource(application));
 }
 
 const getApps = async (req, res) => {
     const AppsModel = app.getModel('apps');
 
-    const apps = await AppsModel.findAll({
+    const applications = await AppsModel.findAll({
         order: [
             ['id', 'DESC']
         ],
     });
 
-    return res.json(apps.map(appResource));
+    return res.json(applications.map(appResource));
 };
 
 const updateApp = async (req, res) => {
-    const app = await App.findOne({ where: { token: req.params.token } });
+    const AppsModel = app.getModel('apps');
 
-    if (!app) {
-        return;
+    const application = await AppsModel.findOne({ where: { token: req.params.token } });
+
+    if (!application) {
+        return res
+            .status(404)
+            .json({
+                message: 'Application with this token is not found'
+            });
     }
 
-    const updatedApp = await app.update(req.body, { returning: true });
+    const updatedApp = await application.update(req.body, { returning: true });
 
     return res.json(appResource(updatedApp));
 };

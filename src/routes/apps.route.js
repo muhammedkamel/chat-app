@@ -3,7 +3,7 @@ const { createApp, getApps, updateApp } = require('../services/apps.service');
 const ExpressJoiValidation = require('express-joi-validation');
 const { createAppValidation } = require('../validations/apps.validation');
 
-const router = express.Router();
+const router = express.Router({ mergeParams: true });
 const validator = ExpressJoiValidation.createValidator({ passError: true });
 
 router.get('/', getApps);

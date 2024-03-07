@@ -1,4 +1,4 @@
-const config = require('./config');
+const config = require('../config/app');
 const express = require('express');
 const setupSequelize = require('./sequelize');
 const registerModels = require('./models');

@@ -9,6 +9,7 @@ services:
   #     - redis
   #     - postgres
   #     - elasticsearch
+  #     - rabbitmq
   #   networks:
   #     - chat-app-network
   #   volumes:

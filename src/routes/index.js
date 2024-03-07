@@ -1,12 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const appsRouter = require('./apps.route');
-
-/* GET home page. */
-router.get('/', function (req, res, next) {
-  res.send({ message: 'Hello World!' });
-});
+const chatsRouter = require('./chats.route');
 
 router.use('/apps', appsRouter);
+router.use('/apps/:token/chats', chatsRouter);
 
 module.exports = router;
