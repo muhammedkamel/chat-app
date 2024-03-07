@@ -28,22 +28,32 @@ module.exports = {
                 }
             },
             exchanges: [
-                "chats_ex"
+                "chats_ex",
+                "messages_ex"
             ],
             queues: [
-                "chats_q"
+                "chats_q",
+                "messages_q",
             ],
             bindings: [
-                "chats_ex -> chats_q"
+                "chats_ex -> chats_q",
+                "messages_ex -> messages_q",
             ],
             publications: {
                 "chats_pub": {
                     "exchange": "chats_ex"
+                },
+                "messages_pub": {
+                    "exchange": "messages_ex"
                 }
             },
             subscriptions: {
                 "chats_sub": {
                     "queue": "chats_q",
+                    "prefetch": 50
+                },
+                "messages_sub": {
+                    "queue": "messages_q",
                     "prefetch": 50
                 }
             }

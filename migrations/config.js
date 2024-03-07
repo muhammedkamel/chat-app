@@ -1,4 +1,4 @@
-const config = require('../src/config');
+const config = require('../config/app')
 
 module.exports = {
   development: {

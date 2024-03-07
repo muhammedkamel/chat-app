@@ -18,7 +18,7 @@ const createChat = async (req, res) => {
     }
 
     // increment and get new chat number for token
-    const chatNumber = await redisClient.INCR(`app:${token}`);
+    const chatNumber = await redisClient.INCR(`app:${token}:chats`);
 
     // publish message to rabbitmq with the chat 
     await broker.publish(
@@ -51,7 +51,10 @@ const getChats = async (req, res) => {
             });
     }
 
-    const chats = await ChatsModel.findAll({ where: { appId: application.id } });
+    const chats = await ChatsModel.findAll({
+        where: { appId: application.id },
+        order: [['id', 'DESC']],
+    });
 
     res.json(chats.map(chatResource));
 }

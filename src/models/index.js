@@ -1,5 +1,6 @@
 const createAppsModel = require('./apps.model');
 const createChatsModel = require('./chats.model');
+const createMessagesModel = require('./messages.model');
 
 function getModel(modelName) {
     const sequelize = this.get('sequelizeClient');
@@ -10,6 +11,7 @@ function getModel(modelName) {
 module.exports = function registerModels(app) {
     createAppsModel(app);
     createChatsModel(app);
+    createMessagesModel(app);
 
     const sequelize = app.get('sequelizeClient');
     const { models } = sequelize;
