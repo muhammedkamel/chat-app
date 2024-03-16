@@ -7,9 +7,11 @@ const routes = require('./routes');
 const middlewares = require('./middlewares');
 const setupRabbitMQ = require('./rabbitmq');
 const setupRedis = require('./redis');
+const setupCronjobs = require('./cron-jobs');
 
 setupRabbitMQ(app);
 setupRedis(app);
+setupCronjobs(app);
 
 app.use(helmet({ frameguard: { action: 'deny' } }));
 app.use(cors());

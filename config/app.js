@@ -32,6 +32,10 @@ const config = {
         port: process.env.REDIS_PORT,
         password: process.env.REDIS_PASSWORD,
     },
+    es: {
+        host: process.env.ES_HOST,
+        port: process.env.ES_PORT,
+    },
 
     get: function (key) {
         if (!key) {

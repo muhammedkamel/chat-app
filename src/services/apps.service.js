@@ -1,3 +1,4 @@
+const Sequelize = require('sequelize');
 const app = require('../app');
 const appResource = require('../resources/app.resource');
 
@@ -39,8 +40,24 @@ const updateApp = async (req, res) => {
     return res.json(appResource(updatedApp));
 };
 
+const updateChatsCount = async () => {
+    console.log('updating chats count');
+    const AppsModel = app.getModel('apps');
+
+    await AppsModel.sequelize.query(
+        `UPDATE apps
+                SET chats_count = (
+                    SELECT COUNT(*)
+                    FROM chats
+                    WHERE chats.app_id = apps.id
+                )`,
+        { type: Sequelize.QueryTypes.UPDATE }
+    );
+};
+
 module.exports = {
     createApp,
     getApps,
-    updateApp
+    updateApp,
+    updateChatsCount
 };

@@ -1,3 +1,4 @@
+const Sequelize = require('sequelize');
 const app = require('../app');
 const chatResource = require('../resources/chat.resource');
 
@@ -67,8 +68,25 @@ const saveChatsBatch = async (chats) => {
     await ChatsModel.bulkCreate(chats);
 }
 
+const updateMessagesCount = async () => {
+    console.log('updating messages count');
+
+    const ChatsModel = app.getModel('chats');
+
+    await ChatsModel.sequelize.query(
+        `UPDATE chats
+                SET messages_count = (
+                    SELECT COUNT(*)
+                    FROM messages
+                    WHERE messages.chat_id = chats.id
+                )`,
+        { type: Sequelize.QueryTypes.UPDATE }
+    );
+};
+
 module.exports = {
     createChat,
     getChats,
-    saveChatsBatch
+    saveChatsBatch,
+    updateMessagesCount
 };
