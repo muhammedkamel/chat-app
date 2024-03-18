@@ -2,6 +2,7 @@ const Broker = require('rascal').BrokerAsPromised;
 const config = require('../config/rabbitmq');
 const { saveChatsBatch } = require('./services/chats.service');
 const { saveMessagesBatch } = require('./services/messages.service');
+const { syncMessage } = require('./services/search.service');
 
 module.exports = async function setupRabbitMQ(app) {
     const broker = await Broker.create(config);
@@ -23,7 +24,8 @@ async function setupSubscriptions(broker) {
 
     await Promise.all([
         setupChatsSubscription(broker),
-        setupMessagesSubscription(broker)
+        setupMessagesSubscription(broker),
+        setupElasticsearchSubscription(broker),
     ]);
 }
 
@@ -70,6 +72,24 @@ async function setupMessagesSubscription(broker) {
 
                 messagesBuffer = [];
             }
+
+            ackOrNack();
+        })
+        .on('error', console.error)
+        .on('invalid_content', (err, message, ackOrNack) => {
+            console.log('Failed to parse message', err);
+
+            ackOrNack();
+        });
+}
+
+async function setupElasticsearchSubscription(broker) {
+    const elasticsearchSubscription = await broker.subscribe('elasticsearch_sub');
+
+    elasticsearchSubscription
+        .on('message', async (message, content, ackOrNack) => {
+
+            await syncMessage(content);
 
             ackOrNack();
         })

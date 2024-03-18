@@ -15,8 +15,13 @@ const updateMessageValidation = Joi.object({
     messageNumber: Joi.number().required(),
 });
 
+const searchMessagesValidation = Joi.object({
+    keyword: Joi.string().required().min(3)
+});
+
 module.exports = {
     createMessageValidation,
     chatMessageValidation,
-    updateMessageValidation
+    updateMessageValidation,
+    searchMessagesValidation
 }

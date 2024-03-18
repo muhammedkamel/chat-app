@@ -8,10 +8,12 @@ const middlewares = require('./middlewares');
 const setupRabbitMQ = require('./rabbitmq');
 const setupRedis = require('./redis');
 const setupCronjobs = require('./cron-jobs');
+const setupElasticsearch = require('./elasticsearch');
 
 setupRabbitMQ(app);
 setupRedis(app);
 setupCronjobs(app);
+setupElasticsearch(app);
 
 app.use(helmet({ frameguard: { action: 'deny' } }));
 app.use(cors());

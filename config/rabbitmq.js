@@ -27,17 +27,29 @@ module.exports = {
                     strategy: "exponential"
                 }
             },
-            exchanges: [
-                "chats_ex",
-                "messages_ex"
-            ],
+            exchanges: {
+                chats_ex: {
+                    type: "fanout",
+                    options: {
+                        durable: true
+                    }
+                },
+                messages_ex: {
+                    type: "fanout",
+                    options: {
+                        durable: true
+                    }
+                }
+            },
             queues: [
                 "chats_q",
                 "messages_q",
+                "elasticsearch_q",
             ],
             bindings: [
                 "chats_ex -> chats_q",
                 "messages_ex -> messages_q",
+                "messages_ex -> elasticsearch_q",
             ],
             publications: {
                 "chats_pub": {
@@ -55,6 +67,10 @@ module.exports = {
                 "messages_sub": {
                     "queue": "messages_q",
                     "prefetch": 50
+                },
+                "elasticsearch_sub": {
+                    "queue": "elasticsearch_q",
+                    "prefetch": 1,
                 }
             }
         }

@@ -31,6 +31,8 @@ const createMessage = async (req, res) => {
             number: messageNumber,
             content,
             chatId: application.chats[0].id,
+            chatNumber: application.chats[0].number,
+            token: application.token,
         }
     )
 
